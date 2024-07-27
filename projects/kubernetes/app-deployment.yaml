@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-final-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+        - name: todo-app
+          image: clarityofmind/todo-app-final
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 3000
+          env:
+            - name: PGHOST
+              value: "postgres-service"
+            - name: PGDATABASE
+              value: ps_db
+            - name: PGUSER
+              value: ps_user
+            - name: PGPASSWORD
+              value: SecurePassword

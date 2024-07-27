@@ -1,24 +1,23 @@
 services:
-  app:
-    image: node:18-alpine
-    command: sh -c "yarn install && yarn run dev"
+  app: # Контейнер с вэб-приложением
+    image: clarityofmind/todo-app-final
     ports:
       - 3000:3000
     working_dir: /app
     volumes:
       - ./:/app
-    environment:
+    environment: # Переменные окружения
       PGHOST: postgres
       PGUSER: user
       PGPASSWORD: password
       PGDATABASE: todos
-  postgres:
+  postgres: # Контейнер с СУБД
     image: postgres
     restart: always
     shm_size: 128mb
     volumes:
       - todo-postgres-data:/var/lib/postgresql/data
-    environment:
+    environment: # Переменные окружения
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
       POSTGRES_DB: todos
